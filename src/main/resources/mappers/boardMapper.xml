@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{title},#{content}, #{writer})
 	</insert>
 
-	<select id="read" resultType="com.dongnemon.domain.BoardVO">
+	<select id="read" resultType="BoardVO">
 		select
 		bno, title, content, writer,
 		regdate, viewcnt
@@ -20,7 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="update">
 		update tbl_board
-		set title =#{title}, content =#{content}
+		set title =#{title}, content
+		=#{content}
 		where bno = #{bno}
 	</update>
 
@@ -28,15 +29,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from tbl_board where bno = #{bno}
 	</delete>
 
-	<select id="listAll" resultType="com.dongnemon.domain.BoardVO">
-		 <![CDATA[
-		 select 
-		   bno, title, content, writer, regdate, viewcnt 
-		 from 
-		   tbl_board 
-		 where bno > 0 
-		 order by bno desc, regdate desc
-		 ]]>
+	<select id="list" resultType="BoardVO">
+	 <![CDATA[
+	 select 
+	   bno, title, content, writer, regdate, viewcnt 
+	 from 
+	   tbl_board 
+	 where bno > 0 
+	 order by bno desc, regdate desc
+	 limit #{pageStart}, #{perPageNum}
+	 ]]>
+	</select>
+
+	<select id="cntPaging" resultType="int">
+	<![CDATA[
+		select count(bno) from tbl_board
+		where bno > 0
+	]]>
 	</select>
 
 </mapper>

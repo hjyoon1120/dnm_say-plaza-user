@@ -1,5 +1,7 @@
 package com.dongnemon.test;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dongnemon.dao.BoardDAO;
 import com.dongnemon.domain.BoardVO;
+import com.dongnemon.domain.Criteria;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/*.xml" })
@@ -24,10 +27,13 @@ public class BoardDAOTest {
 	public void testCreate() throws Exception {
 
 		BoardVO board = new BoardVO();
-		board.setTitle("Create new Text");
-		board.setContent("Insert new Content");
-		board.setWriter("Writer");
-		dao.create(board);
+		for (int i = 0; i < 100; i++) {
+
+			board.setTitle("Create new Text_" + i);
+			board.setContent("Insert new Content_" + i);
+			board.setWriter("User" + i);
+			dao.create(board);
+		}
 	}
 
 	@Test
@@ -53,10 +59,18 @@ public class BoardDAOTest {
 	}
 
 	@Test
-	public void testListAll() throws Exception {
+	public void testList() throws Exception {
+		
+		Criteria cri = new Criteria();
+		cri.setPage(2);
+		cri.setPerPageNum(20);
+		
+		List<BoardVO> list = dao.list(cri);
 
-		logger.info(dao.listAll().toString());
+		for (BoardVO boardVO : list) {
+			logger.info(boardVO.getBno() + ":" + boardVO.getTitle());
 
+		}
 	}
 
 }

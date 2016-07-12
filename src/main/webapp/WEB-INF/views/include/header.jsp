@@ -328,7 +328,7 @@
 					</div>
 				</div>
 				<!-- search form -->
-				<form action="#" method="get" class="sidebar-form">
+				<%-- <form action="#" method="get" class="sidebar-form">
 					<div class="input-group">
 						<input type="text" name="keyword" id="keywordInput"
 							class="form-control" value='${cri.keyword }'
@@ -339,7 +339,7 @@
 							</button>
 						</span>
 					</div>
-				</form>
+				</form> --%>
 				<!-- /.search form -->
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
@@ -403,7 +403,7 @@
 			<!-- /.sidebar -->
 		</aside>
 
-		<script>
+<!-- 		<script>
 			$(document).ready(	function() {
 						$('#search-btn').on("click", function(event) {
 									self.location = "sayList"
@@ -412,4 +412,4 @@
 											+ $('#keywordInput').val();
 								});
 					});
-		</script>
+		</script> -->

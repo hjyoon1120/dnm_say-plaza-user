@@ -3,6 +3,7 @@ package com.dongnemon.service;
 import java.util.List;
 
 import com.dongnemon.domain.BoardVO;
+import com.dongnemon.domain.Criteria;
 
 public interface BoardService {
 	
@@ -14,6 +15,8 @@ public interface BoardService {
 	
 	public void remove(Integer bno) throws Exception;
 	
-	public List<BoardVO> listAll() throws Exception;
+	public List<BoardVO> list(Criteria cri) throws Exception;
+	
+	public int cntPaging(Criteria cri) throws Exception;
 
 }

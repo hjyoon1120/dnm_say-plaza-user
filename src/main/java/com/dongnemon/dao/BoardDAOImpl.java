@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dongnemon.domain.BoardVO;
+import com.dongnemon.domain.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
-	
+
 	@Autowired
 	private SqlSession session;
 
@@ -37,8 +38,12 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> listAll() throws Exception {
-		return session.selectList(namespace + ".listAll");
+	public List<BoardVO> list(Criteria cri) throws Exception {
+		return session.selectList(namespace + ".list", cri);
 	}
 
+	@Override
+	public int cntPaging(Criteria cri) throws Exception {
+		return session.selectOne(namespace + ".cntPaging", cri);
+	}
 }

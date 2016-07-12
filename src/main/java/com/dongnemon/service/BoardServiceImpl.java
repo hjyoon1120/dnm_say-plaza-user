@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.dongnemon.dao.BoardDAO;
 import com.dongnemon.domain.BoardVO;
+import com.dongnemon.domain.Criteria;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -35,7 +36,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> listAll() throws Exception {
-		return dao.listAll();
+	public List<BoardVO> list(Criteria cri) throws Exception {
+		return dao.list(cri);
+	}
+	
+	@Override
+	public int cntPaging(Criteria cri) throws Exception {
+		return dao.cntPaging(cri);
 	}
 }
