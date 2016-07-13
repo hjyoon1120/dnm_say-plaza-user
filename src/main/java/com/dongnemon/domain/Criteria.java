@@ -4,6 +4,7 @@ public class Criteria {
 
 	private int page;
 	private int perPageNum;
+	private String keyword;
 
 	public Criteria() {
 		this.page = 1;
@@ -44,9 +45,17 @@ public class Criteria {
 		return this.perPageNum;
 	}
 
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
 	@Override
 	public String toString() {
-		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + "]";
+		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", keyword=" + keyword + "]";
 	}
 
 }

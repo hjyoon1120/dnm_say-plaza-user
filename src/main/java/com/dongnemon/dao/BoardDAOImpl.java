@@ -1,6 +1,8 @@
 package com.dongnemon.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,21 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int cntPaging(Criteria cri) throws Exception {
 		return session.selectOne(namespace + ".cntPaging", cri);
+	}
+	
+	@Override
+	public void uptReplyCnt(Integer bno, int amount) throws Exception {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("bno", bno);
+		paramMap.put("amount", amount);
+		
+		session.update(namespace + ".uptReplyCnt", paramMap);
+	}
+	
+	@Override
+	public void uptViewCnt(Integer bno) throws Exception {
+		session.update(namespace + ".uptViewCnt", bno);
 	}
 }

@@ -72,5 +72,23 @@ public class BoardDAOTest {
 
 		}
 	}
+	
+	@Test
+	public void testDynamic() throws Exception {
+		
+		Criteria cri = new Criteria();
+		cri.setPage(1);
+		cri.setKeyword("90");
+		
+		logger.info("=========================");
+		List<BoardVO> list = dao.list(cri);
+		
+		for (BoardVO boardVO : list) {
+			logger.info(boardVO.getBno() + ":" + boardVO.getTitle());
+		}
+		
+		logger.info("=========================");
+		logger.info("COUNT: " + dao.list(cri));
+	}
 
 }

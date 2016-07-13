@@ -41,11 +41,10 @@
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet"
 	href="/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
-<script type="text/javascript" src="/resources/js/upload.js"></script>
+
+<!-- <script type="text/javascript" src="/resources/js/upload.js"></script> -->
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

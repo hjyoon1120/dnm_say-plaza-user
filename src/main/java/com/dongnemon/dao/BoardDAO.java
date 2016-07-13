@@ -18,5 +18,8 @@ public interface BoardDAO {
 	public List<BoardVO> list(Criteria cri) throws Exception;
 	
 	public int cntPaging(Criteria cri) throws Exception;
-
+	
+	public void uptReplyCnt(Integer bno, int amount) throws Exception;
+	
+	public void uptViewCnt(Integer bno) throws Exception;
 }

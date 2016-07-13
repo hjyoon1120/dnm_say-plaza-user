@@ -30,22 +30,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<select id="list" resultType="BoardVO">
-	 <![CDATA[
-	 select 
-	   bno, title, content, writer, regdate, viewcnt 
-	 from 
-	   tbl_board 
-	 where bno > 0 
-	 order by bno desc, regdate desc
-	 limit #{pageStart}, #{perPageNum}
-	 ]]>
+		<![CDATA[
+		select 
+		  bno, title, content, writer, regdate, viewcnt, replycnt
+		from 
+		  tbl_board 
+		where bno > 0 
+		]]>
+	
+		<include refid="search"></include>
+		
+		<![CDATA[
+		 order by bno desc, regdate desc
+		 limit #{pageStart}, #{perPageNum}
+		]]>
 	</select>
 
 	<select id="cntPaging" resultType="int">
-	<![CDATA[
-		select count(bno) from tbl_board
-		where bno > 0
-	]]>
+		<![CDATA[
+			select count(bno) from tbl_board
+			where bno > 0
+		]]>
+		<include refid="search"></include>
 	</select>
+
+	<sql id="search">
+		<if test="keyword!=null">
+			and ( title like CONCAT('%', #{keyword}, '%')
+			or content like CONCAT('%', #{keyword}, '%')
+			or writer like CONCAT('%', #{keyword}, '%')
+			)
+		</if>
+	</sql>
+	
+	<update id="uptReplyCnt">
+		update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
+	</update>
+	
+	<update id="uptViewCnt">
+		update tbl_board set viewcnt = viewcnt + 1 where bno = #{bno}
+	</update>
 
 </mapper>
