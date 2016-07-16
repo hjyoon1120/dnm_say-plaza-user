@@ -18,5 +18,7 @@ public interface BoardService {
 	public List<BoardVO> list(Criteria cri) throws Exception;
 	
 	public int cntPaging(Criteria cri) throws Exception;
+	
+	public List<String> getAttach(Integer bno) throws Exception;
 
 }

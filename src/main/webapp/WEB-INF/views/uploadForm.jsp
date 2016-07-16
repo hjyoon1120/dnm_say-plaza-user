@@ -20,24 +20,58 @@ iframe {
 
 	<form id='form1' action="uploadForm" method="post"
 		enctype="multipart/form-data" target="zeroFrame">
-		<input type='file' name='file'> <input type='submit'>
+		<input type='file' name='file'> <input id="btn" type='submit'>
 	</form>
-
+	
+	<div class="uploadedList"></div>
 	<iframe name="zeroFrame"></iframe>
-
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script>
 		function addFilePath(msg) {
 			alert(msg);
 			document.getElementById("form1").reset();
 		}
+		
+		/* $("#btn").on("click", function(event){
+			
+			
+			var files = event.originalEvent.dataTransfer.files;
+			
+			var file = files[0];
+			
+			console.log(file);
+			
+			var formData = new FormData();
+			
+			formData.append("file", file);
+			
+			$.ajax({
+				url:'/uploadForm',
+				data: formData,
+				dataType:'text',
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: function(data) {
+					var str="";
+					
+					if(checkImageType(data)){
+						
+						str = "<div><img src='displayFile?fileName=" + data + "'/>" + data + "</div>";
+						
+					} else {
+						
+						str = "<div>" + data + "</div>";
+					}
+					
+					$(".uploadedList").append(str);
+				}
+			});
+		}) */
+		
 	</script>
-
-
-	<!-- 	<form id='form1' action="uploadForm" method="post"
-		enctype="multipart/form-data">
-		<input type='file' name='file'> <input type='submit'>
-	</form>
- -->
+	
 </body>
 </html>
 
