@@ -23,12 +23,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 
 		ModelMap modelMap = modelAndView.getModelMap();
-		Object userVO = modelMap.get("userVO");
+		Object accountVO = modelMap.get("accountVO");
 
-		if (userVO != null) {
+		if (accountVO != null) {
 
 			logger.info("new login success");
-			session.setAttribute(LOGIN, userVO);
+			session.setAttribute(LOGIN, accountVO);
 
 			if (request.getParameter("useCookie") != null) {
 				logger.info("remember me....");

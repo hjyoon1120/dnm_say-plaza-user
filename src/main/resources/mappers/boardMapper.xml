@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getAttach">
-		select fullname = from tbl_attach where bno = ${bno} order by regdates
+		select fullname = from tbl_attach where bno = ${bno} order by regdate
 	</select>
 	
 	<delete id="deleteAttach">

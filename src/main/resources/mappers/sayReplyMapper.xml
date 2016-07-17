@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dongnemon.dao.SayReplyDAO">
+
+	<insert id="create">
+		insert into tb_say_comment (say_id, body, user_id)
+		values(#{say_id},#{body}, #{user_id})
+	</insert>
+
+	<update id="update">
+		update tb_say_comment
+		set body =#{body}, updated_at
+		= now()
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from tb_say_comment where id = #{id}
+	</delete>
+
+	<select id="list" resultType="SayReplyVO">
+		select * from tb_say_comment where say_id =
+		#{say_id} order by id desc
+	</select>
+
+	<select id="listPage" resultType="SayReplyVO">
+		select * from tb_say_comment where say_id =
+		#{say_id} order by id desc
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+
+	<select id="cntReply" resultType="int">
+		select count(say_id) from
+		tb_say_comment where say_id =#{say_id}
+	</select>
+	
+	<select id="getSay_id" resultType="int">
+		select say_id from tb_say_comment where id = #{id}
+	</select>
+
+</mapper>

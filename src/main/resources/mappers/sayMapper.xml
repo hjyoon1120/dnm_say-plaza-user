@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dongnemon.dao.SayDAO">
+
+	<insert id="create">
+		insert into tb_say (user_id, body, latitude, longitude, img_src)
+		values(#{user_id},#{body}, 11.000000, 111.000000, 'imgsrc......')
+	</insert>
+
+	<select id="read" resultType="SayVO">
+		select
+		id, user_id, body, latitude, longitude, img_src, created_at, updated_at,
+		cnt_like, cnt_comment
+		from tb_say
+		where id = #{id}
+	</select>
+
+	<update id="update">
+		update tb_say
+		set body =#{body}, updated_at=now()
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from tb_say where id = #{id}
+	</delete>
+
+	<select id="list" resultType="SayVO">
+		<![CDATA[
+		select 
+		  id, user_id, body, latitude, longitude, img_src, created_at,
+		  updated_at, cnt_like, cnt_comment
+		from 
+		  tb_say 
+		where id > 0 
+		]]>
+	
+		<include refid="search"></include>
+		
+		<![CDATA[
+		 order by id desc, created_at desc
+		 limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<select id="cntPaging" resultType="int">
+		<![CDATA[
+			select count(id) from tb_say
+			where id > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<sql id="search">
+		<if test="keyword!=null">
+			and ( user_id like CONCAT('%', #{keyword}, '%')
+			or body like CONCAT('%', #{keyword}, '%'))
+		</if>
+		
+		<!-- <if test="keyword!=null">
+			and ( user_id like CONCAT('%', #{keyword}, '%')
+			or body like CONCAT('%', #{keyword}, '%')
+			or writer like CONCAT('%', #{keyword}, '%')
+			)
+		</if> -->
+	</sql>
+	
+	<update id="uptReplyCnt">
+		update tb_say set cnt_comment = cnt_comment + #{amount} where id = #{id}
+	</update>
+	
+	<update id="uptLikeCnt">
+		update tb_say set cnt_like = cnt_like + 1 where id = #{id}
+	</update>
+	
+	<insert id="addAttach">
+		insert into tb_say_attach(img_src, say_id) values (#{img_src}, LAST_INSERT_ID())
+	</insert>
+	
+	<select id="getAttach">
+		select img_src = from tb_say_attach where say_id = #{say_id} order by created_at
+	</select>
+	
+	<delete id="deleteAttach">
+		delete from tb_say_attach where say_id = #{say_id}
+	</delete>
+
+	<insert id="replaceAttach">
+		insert into tb_say_attach(img_src, say_id) values (#{img_src}, #{say_id})
+	</insert>
+</mapper>

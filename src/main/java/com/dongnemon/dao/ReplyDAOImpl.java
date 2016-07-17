@@ -47,7 +47,7 @@ public class ReplyDAOImpl implements ReplyDAO {
 		paramMap.put("bno", bno);
 		paramMap.put("cri", cri);
 
-		return session.selectList(namespace + ".list", paramMap);
+		return session.selectList(namespace + ".listPage", paramMap);
 	}
 
 	@Override

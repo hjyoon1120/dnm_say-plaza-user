@@ -63,7 +63,7 @@
 							<div class="form-group">
 								<label for="exampleInputEmail1">Writer</label> <input
 									type="text" name="writer" class="form-control"
-									value="${boardVO.writer}">
+									value="${boardVO.writer}" readonly>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">File Drop Here</label>
