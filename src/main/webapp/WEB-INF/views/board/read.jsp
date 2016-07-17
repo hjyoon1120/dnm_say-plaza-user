@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 
 <%@ include file="../include/header.jsp"%>
 
@@ -39,7 +41,7 @@
 							type='hidden' name='perPageNum' value="${cri.perPageNum }">
 						<input type='hidden' name='keyword' value="${cri.keyword }">
 					</form>
-
+					
 					<div class="box-body">
 						<div class="form-group">
 							<label for="exampleInputEmail1">Title</label> <input type="text"
@@ -59,11 +61,15 @@
 					</div>
 					<!-- /.box-body -->
 					
-					<ul class="mailbox-attachments clearfix uploadedList"></ul>
-
 					<div class="box-footer">
-						<button type="submit" class="btn btn-warning" id="modifyBtn">MODIFY</button>
-						<button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
+						
+						<div><hr></div>
+						<ul class="mailbox-attachments clearfix uploadedList"></ul>
+						
+						<c:if test="${login.uid == boardVO.writer}">
+							<button type="submit" class="btn btn-warning" id="modifyBtn">MODIFY</button>
+							<button type="submit" class="btn btn-danger" id="removeBtn">REMOVE</button>
+						</c:if>
 						<button type="submit" class="btn btn-primary" id="goListBtn">LIST</button>
 					</div>
 
@@ -82,19 +88,29 @@
 					<div class="box-header">
 						<h3 class="box-title">ADD NEW REPLY</h3>
 					</div>
-					<div class="box-body">
-						<label for="exampleInputEmail1">Writer</label> <input
-							class="form-control" type="text" placeholder="USER ID"
-							id="newReplyWriter"> <label for="exampleInputEmail1">Reply
-							Text</label> <input class="form-control" type="text"
-							placeholder="REPLY TEXT" id="newReplyText">
-
-					</div>
-					<!-- /.box-body -->
-					<div class="box-footer">
-						<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
-							REPLY</button>
-					</div>
+					
+					<!-- Login -->
+					<c:if test="${not empty login}">
+						<div class="box-body">
+							<label for="exampleInputEmail1">Writer</label>
+							<input class="form-control" type="text" id="newReplyWriter" value="${login.uid}" readonly>
+							
+							<label for="exampleInputEmail1">Reply Text</label>
+							<input class="form-control" type="text" placeholder="REPLY TEXT" id="newReplyText">
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer">
+							<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
+								REPLY</button>
+						</div>
+					</c:if>
+					
+					<!-- Not Login -->
+					<c:if test="${empty login}">
+						<div class="box-body">
+							<div><a href="javascript:goLogin();">Login Please</a></div>
+						</div>
+					</c:if>
 				</div>
 
 
@@ -160,8 +176,10 @@
   <h3 class="timeline-header"><strong>{{rno}}</strong> -{{replyer}}</h3>
   <div class="timeline-body">{{replytext}} </div>
     <div class="timeline-footer">
+	 {{#eqReplyer replyer}}
      <a class="btn btn-primary btn-xs" 
 	    data-toggle="modal" data-target="#modifyModal">Modify</a>
+	 {{/eqReplyer}}
     </div>
   </div>			
 </li>
@@ -180,6 +198,14 @@
 <script>
 	console.log(Handlebars.compile);
 	console.dir(Handlebars);
+	
+	Handlebars.registerHelper("eqReplyer", function(replyer, block) {
+		var accum = '';
+		if(replyer == '${login.uid}') {
+			accum += block.fn();
+		}
+		return accum;
+	});
 	
 	Handlebars.registerHelper("prettifyDate", function(timeValue) {
 		var dateObj = new Date(timeValue);

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,9 +41,11 @@
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet"
 	href="/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
 <script type="text/javascript" src="/resources/js/upload.js"></script>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -316,7 +318,72 @@
 			<!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
 				<!-- Sidebar user panel -->
-				<div class="user-panel">
+				<c:if test="${empty login}">
+					<div class="user-panel">
+						<form action="/user/loginPost" method="post">
+							<div class="form-group has-feedback">
+								<input type="text" name="uid" class="form-control"
+									placeholder="USER ID" /> <span
+									class="glyphicon glyphicon-envelope form-control-feedback"></span>
+							</div>
+							<div class="form-group has-feedback">
+								<input type="password" name="upw" class="form-control"
+									placeholder="Password" /> <span
+									class="glyphicon glyphicon-lock form-control-feedback"></span>
+							</div>
+							<div class="form-group has-feedback">
+								<div class="col-xs-6">
+									<div class="checkbox icheck">
+										<label> <input type="checkbox" name="useCookie">
+											Remember
+										</label>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<button type="submit"
+										class="btn btn-primary btn-block btn-flat">Sign In</button>
+								</div>
+								<!-- /.col -->
+							</div>
+
+						</form>
+
+
+					</div>
+					<!-- /.user-panel -->
+				</c:if>
+
+				<c:if test="${not empty login}">
+					<div class="user-panel">
+						<div class="pull-left image">
+							<img src="/resources/dist/img/user2-160x160.jpg"
+								class="img-circle" alt="User Image">
+						</div>
+						<div class="pull-left info">
+							<p>${login.uname}</p>
+							<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+						</div>
+					</div>
+					<div class="user-panel">
+						<div class="col-xs-6">
+							<form action=#>
+								<button type="submit" class="btn btn-warning btn-block btn-flat">
+									<i class="glyphicon glyphicon-cog"></i>&nbsp; My Info
+								</button>
+							</form>
+						</div>
+						<div class="col-xs-6">
+							<form action="/user/logout" method="post">
+								<button type="submit" class="btn btn-danger btn-block btn-flat">
+									<i class="glyphicon glyphicon-log-out"></i>&nbsp; Sign out
+								</button>
+							</form>
+
+						</div>
+						<!-- /.col -->
+					</div>
+				</c:if>
+				<!-- <div class="user-panel">
 					<div class="pull-left image">
 						<img src="/resources/dist/img/user2-160x160.jpg"
 							class="img-circle" alt="User Image">
@@ -325,7 +392,7 @@
 						<p>Alexander Pierce</p>
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
-				</div>
+				</div> -->
 				<!-- search form -->
 				<%-- <form action="#" method="get" class="sidebar-form">
 					<div class="input-group">
@@ -402,7 +469,7 @@
 			<!-- /.sidebar -->
 		</aside>
 
-<!-- 		<script>
+		<!-- 		<script>
 			$(document).ready(	function() {
 						$('#search-btn').on("click", function(event) {
 									self.location = "sayList"
