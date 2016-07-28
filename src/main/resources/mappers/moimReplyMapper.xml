@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dongnemon.dao.MoimReplyDAO">
+
+	<insert id="create">
+		insert into tb_moim_comment (moim_id, body, user_id)
+		values(#{moim_id},#{body}, #{user_id})
+	</insert>
+
+	<update id="update">
+		update tb_moim_comment
+		set body =#{body}, updated_at
+		= now()
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from tb_moim_comment where id = #{id}
+	</delete>
+
+	<select id="list" resultType="MoimReplyVO">
+		select tb_moim_comment.*, tb_users.nickname
+		from tb_moim_comment, tb_users
+		where tb_moim_comment.moim_id = #{moim_id}
+		and tb_moim_comment.user_id = tb_users.id
+		order by tb_moim_comment.id desc
+	</select>
+
+	<select id="listPage" resultType="MoimReplyVO">
+		select tb_moim_comment.*, tb_users.nickname 
+		from tb_moim_comment, tb_users
+		where tb_moim_comment.moim_id = #{moim_id}
+		and tb_moim_comment.user_id = tb_users.id
+		order by tb_moim_comment.id desc
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+
+	<select id="cntReply" resultType="int">
+		select count(moim_id) from
+		tb_moim_comment where moim_id =#{moim_id}
+	</select>
+	
+	<select id="getMoim_id" resultType="int">
+		select moim_id from tb_moim_comment where id = #{id}
+	</select>
+
+</mapper>

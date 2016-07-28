@@ -12,10 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="read" resultType="SayVO">
 		select
-		id, user_id, body, latitude, longitude, img_src, created_at, updated_at,
-		cnt_like, cnt_comment
-		from tb_say
-		where id = #{id}
+		tb_say.*, tb_users.nickname
+		from tb_say, tb_users
+		where tb_say.id = #{id} and tb_say.user_id = tb_users.id 
 	</select>
 
 	<update id="update">
@@ -31,33 +30,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="list" resultType="SayVO">
 		<![CDATA[
 		select 
-		  id, user_id, body, latitude, longitude, img_src, created_at,
-		  updated_at, cnt_like, cnt_comment
+		  tb_say.id, tb_say.user_id, tb_say.body, tb_say.latitude, tb_say.longitude, tb_say.img_src,
+		  tb_say.created_at, tb_say.updated_at, tb_say.cnt_like, tb_say.cnt_comment, tb_users.nickname
 		from 
-		  tb_say 
-		where id > 0 
+		  tb_say, tb_users 
+		where tb_say.id > 0 and tb_say.user_id = tb_users.id
 		]]>
 	
 		<include refid="search"></include>
 		
 		<![CDATA[
-		 order by id desc, created_at desc
+		 order by tb_say.id desc, tb_say.created_at desc
 		 limit #{pageStart}, #{perPageNum}
 		]]>
 	</select>
 
 	<select id="cntPaging" resultType="int">
 		<![CDATA[
-			select count(id) from tb_say
-			where id > 0
+			select count(tb_say.id) from tb_say, tb_users
+			where tb_say.id > 0
 		]]>
 		<include refid="search"></include>
 	</select>
 
 	<sql id="search">
 		<if test="keyword!=null">
-			and ( user_id like CONCAT('%', #{keyword}, '%')
-			or body like CONCAT('%', #{keyword}, '%'))
+			and ( tb_users.nickname like CONCAT('%', #{keyword}, '%')
+			or tb_say.body like CONCAT('%', #{keyword}, '%'))
 		</if>
 		
 		<!-- <if test="keyword!=null">
@@ -80,8 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into tb_say_attach(img_src, say_id) values (#{img_src}, LAST_INSERT_ID())
 	</insert>
 	
-	<select id="getAttach">
-		select img_src = from tb_say_attach where say_id = #{say_id} order by created_at
+	<select id="getAttach" resultType="string">
+		select img_src from tb_say_attach where say_id = #{say_id} order by created_at
 	</select>
 	
 	<delete id="deleteAttach">

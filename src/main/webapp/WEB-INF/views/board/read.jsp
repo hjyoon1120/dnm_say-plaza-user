@@ -10,13 +10,12 @@
     .front { 
        z-index:1110; opacity:1; boarder:1px; margin: auto; 
       }
-     .show{
+    .show{
        position:relative;
        max-width: 1200px; 
        max-height: 800px; 
        overflow: auto;       
      } 
-  	
 </style>
 
 <!-- Content Wrapper. Contains page content -->
@@ -57,9 +56,9 @@
 								name="writer" class="form-control" value="${boardVO.writer}"
 								readonly="readonly">
 						</div>
+						
 					</div>
 					<!-- /.box-body -->
-					
 					<div class="box-footer">
 						
 						<div><hr></div>
@@ -192,12 +191,11 @@
 			<a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
 		</div>
 	</li>
+
+
 </script>
 
 <script>
-	console.log(Handlebars.compile);
-	console.dir(Handlebars);
-	
 	Handlebars.registerHelper("eqReplyer", function(replyer, block) {
 		var accum = '';
 		if(replyer == '${login.uid}') {

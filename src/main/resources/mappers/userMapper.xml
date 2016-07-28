@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dongnemon.dao.UserDAO">
+
+	<select id="login" resultType = "UserVO">
+		select * from tb_users where email = #{id} and pw = #{pw}
+	</select>
+	
+	<update id="keepLogin">
+		update tb_users set sess = #{sess}, sessionlimit = #{sessionlimit} where id = #{id}
+	</update>
+	
+	<select id="checkUserWithSessionKey" resultType="UserVO">
+		select * from tb_users where sess = #{value}
+		and sessionlimit > now()
+	</select>
+	
+	<insert id="create">
+		insert into tb_users(
+			pw, email, nickname, img_src, sex, address, locale, country, town1, town2, town3, town4, town5, town_latitude, town_longitude, dob)
+		values(#{pw}, #{email}, #{nickname}, 'img_src', #{sex}, 'address' , 'ko_KR', '대한민국', #{town1}, #{town2}, #{town3}, #{town4}, #{town5}, 11.111111, 111.111111, '19871120')
+	</insert>
+	
+	<select id="read" resultType = "UserVO">
+		select * from tb_users where id = #{id}
+	</select>
+	
+	<update id="update">
+		update tb_users
+		set nickname =#{nickname}, job = #{job}, sex = #{sex}, text = #{text}, town1=#{town1}, town2=#{town2}, town2=#{town2}, town3=#{town3}, town4=#{town4}, town5 = #{town5}
+		where id = #{id}   
+	</update>
+	
+	<delete id="delete">
+		delete from tb_users where id = #{id}
+	</delete>
+	
+	<select id="list" resultType="UserVO">
+		<![CDATA[
+		select * from tb_users where id > 0
+		]]>
+		
+		<include refid="search"></include>
+		
+		<![CDATA[
+		order by id desc, created_at desc
+		limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+	<select id="cntPaging" resultType="int">
+		<![CDATA[
+		select count(id) from tb_users
+		where id > 0
+		]]>
+		<include refid = "search"></include>
+	</select>
+	
+	<sql id="search">
+		<if test="keyword!=null">
+			and (nickname like CONCAT('%', #{keyword}, '%')
+			or town1 like CONCAT('%', #{keyword}, '%')
+			or town2 like CONCAT('%', #{keyword}, '%')
+			or town3 like CONCAT('%', #{keyword}, '%')
+			)
+		</if>
+	</sql>
+	
+	<insert id="addAttach">
+		insert into tb_user_attach(img_src, user_id) values (#{img_src}, LAST_INSERT_ID())
+	</insert>
+	
+	<select id ="getAttach" resultType="string">
+		select img_src from tb_user_attach where user_id = #{user_id} order by created_at
+	</select>
+	
+	<delete id="deleteAttach">
+		delete from tb_user_attach where user_id = #{user_id}
+	</delete>
+	
+	<insert id="replaceAttach">
+		insert into tb_user_attach(img_src, user_id) values (#{img_src}, #{user_id})
+	</insert>
+</mapper>
+
+ 

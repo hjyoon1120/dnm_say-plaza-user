@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dongnemon.dao.PlazaReplyDAO">
+
+	<insert id="create">
+		insert into tb_plaza_comment (plaza_id, body, user_id)
+		values(#{plaza_id},#{body}, #{user_id})
+	</insert>
+
+	<update id="update">
+		update tb_plaza_comment
+		set body =#{body}, updated_at
+		= now()
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from tb_plaza_comment where id = #{id}
+	</delete>
+
+	<select id="list" resultType="PlazaReplyVO">
+		select tb_plaza_comment.*, tb_users.nickname 
+		from tb_plaza_comment, tb_users 
+		where tb_plaza_comment.plaza_id = #{plaza_id} and tb_plaza_comment.user_id = tb_users.id
+		order by tb_plaza_comment.id desc
+	</select>
+
+	<select id="listPage" resultType="PlazaReplyVO">
+		select tb_plaza_comment.*, tb_users.nickname 
+		from tb_plaza_comment, tb_users 
+		where tb_plaza_comment.plaza_id = #{plaza_id} and tb_plaza_comment.user_id = tb_users.id
+		order by tb_plaza_comment.id desc
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+
+	<select id="cntReply" resultType="int">
+		select count(plaza_id) from
+		tb_plaza_comment where plaza_id =#{plaza_id}
+	</select>
+	
+	<select id="getPlaza_id" resultType="int">
+		select plaza_id from tb_plaza_comment where id = #{id}
+	</select>
+
+</mapper>

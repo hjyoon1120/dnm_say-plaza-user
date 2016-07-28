@@ -25,7 +25,7 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="/resources/plugins/iCheck/flat/blue.css">
 <script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
@@ -64,15 +64,15 @@
 
                     </li>-->
 						<li class="dropdown notifications-menu"><a
-							href="http://localhost:8080/say/sayList"> <i
+							href="http://localhost:8080/say/list"> <i
 								class="glyphicon glyphicon-list-alt"></i>
 						</a></li>
 						<li class="dropdown notifications-menu"><a
-							href="http://localhost:8080/plaza/plazaList"> <i
+							href="http://localhost:8080/plaza/list"> <i
 								class="glyphicon glyphicon-th-large"></i>
 						</a></li>
 						<li class="dropdown tasks-menu"><a
-							href="http://localhost:8080/moim/moimList"> <i
+							href="http://localhost:8080/moim/list"> <i
 								class="fa fa-users"></i>
 						</a></li>
 					</ul>
@@ -303,14 +303,14 @@
 				<!-- Sidebar user panel -->
 				<c:if test="${empty login}">
 					<div class="user-panel">
-						<form action="/account/loginPost" method="post">
+						<form action="/user/loginPost" method="post">
 							<div class="form-group has-feedback">
-								<input type="text" name="uid" class="form-control"
-									placeholder="USER ID" /> <span
+								<input type="text" name="id" class="form-control"
+									placeholder="Email" /> <span
 									class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-								<input type="password" name="upw" class="form-control"
+								<input type="password" name="pw" class="form-control"
 									placeholder="Password" /> <span
 									class="glyphicon glyphicon-lock form-control-feedback"></span>
 							</div>
@@ -343,20 +343,21 @@
 								class="img-circle" alt="User Image">
 						</div>
 						<div class="pull-left info">
-							<p>${login.uname}</p>
+							<p>${login.nickname}</p>
 							<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 						</div>
 					</div>
 					<div class="user-panel">
 						<div class="col-xs-6">
-							<form action=#>
+							<form action="/user/read?id='${login.id}" method="get">
+								<input type='hidden' name=id value="${login.id}">
 								<button type="submit" class="btn btn-warning btn-block btn-flat">
 									<i class="glyphicon glyphicon-cog"></i>&nbsp; My Info
 								</button>
 							</form>
 						</div>
 						<div class="col-xs-6">
-							<form action="/account/logout" method="post">
+							<form action="/user/logout" method="post">
 								<button type="submit" class="btn btn-danger btn-block btn-flat">
 									<i class="glyphicon glyphicon-log-out"></i>&nbsp; Sign out
 								</button>

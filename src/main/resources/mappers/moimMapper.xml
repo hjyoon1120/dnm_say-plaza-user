@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dongnemon.dao.MoimDAO">
+
+	<insert id="create">
+		insert into tb_moims (
+		user_id, store_id, title, content, latitude, 
+		longitude, town, address, meet_at, price_orig, 
+		price_discount, cnt_attendee, max_attendee, 
+		cnt_comment, created_at)
+		values(
+		#{user_id}, 0, #{title}, #{content}, 0, 0, #{town}, #{address},
+		20160730, #{price_orig}, 0, 0, #{max_attendee}, 
+		0, now())
+	</insert>
+
+	<select id="read" resultType="MoimVO">
+		select
+		tb_moims.*, tb_users.nickname
+		from
+		tb_moims, tb_users
+		where tb_moims.id = #{id} and tb_moims.user_id = tb_users.id
+	</select>
+
+	<update id="update">
+		update tb_moims set title =#{title}, content =#{content}, town=#{town}, 
+		meet_at=#{meet_at}, price_orig=#{price_orig}, max_attendee=#{max_attendee},
+		updated_at=now()
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from tb_moims where id = #{id}
+	</delete>
+
+	<select id="list" resultType="MoimVO">
+		<![CDATA[
+		select tb_moims.*, tb_users.nickname 
+    	from tb_moims, tb_users 
+    	where tb_moims.id > 0 and tb_moims.user_id = tb_users.id 
+		]]>
+	
+		<include refid="search"></include>
+		
+		<![CDATA[
+		 order by tb_moims.id desc, tb_moims.created_at desc
+		 limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<select id="cntPaging" resultType="int">
+		<![CDATA[
+			select count(tb_moims.id) from tb_moims, tb_users
+			where tb_moims.id > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<sql id="search">
+		<if test="keyword!=null">
+			and ( tb_users.nickname like CONCAT('%', #{keyword}, '%')
+			or tb_moims.title like CONCAT('%', #{keyword}, '%')
+			or tb_moims.content like CONCAT('%', #{keyword}, '%')
+			or tb_moims.town like CONCAT('%', #{keyword}, '%')
+			)
+		</if>
+		
+		<!-- <if test="keyword!=null">
+			and ( user_id like CONCAT('%', #{keyword}, '%')
+			or body like CONCAT('%', #{keyword}, '%')
+			or writer like CONCAT('%', #{keyword}, '%')
+			)
+		</if> -->
+	</sql>
+	
+	<update id="uptReplyCnt">
+		update tb_moims set cnt_comment = cnt_comment + #{amount} where id = #{id}
+	</update>
+	
+	<insert id="addAttach">
+		insert into tb_moim_attach(img_src, moim_id) values (#{img_src}, LAST_INSERT_ID())
+	</insert>
+	
+	<select id="getAttach" resultType="string">
+		select img_src from tb_moim_attach where moim_id = #{moim_id} order by created_at
+	</select>
+	
+	<delete id="deleteAttach">
+		delete from tb_moim_attach where moim_id = #{moim_id}
+	</delete>
+
+	<insert id="replaceAttach">
+		insert into tb_moim_attach(img_src, moim_id) values (#{img_src}, #{moim_id})
+	</insert>
+</mapper>

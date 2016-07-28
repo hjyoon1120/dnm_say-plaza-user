@@ -22,12 +22,12 @@ public class SayServiceImpl implements SayService {
 		dao.create(say);
 
 		String[] files = say.getFiles();
-
 		if (files == null) {
 			return;
 		}
 
 		for (String fileName : files) {
+			System.out.println("fileName: " + fileName);
 			dao.addAttach(fileName);
 		}
 	}
@@ -43,7 +43,8 @@ public class SayServiceImpl implements SayService {
 		dao.update(say);
 
 		Integer say_id = say.getId();
-
+		
+		//????
 		dao.deleteAttach(say_id);
 
 		String[] files = say.getFiles();

@@ -1,34 +1,56 @@
 package com.dongnemon.dto;
 
 public class LoginDTO {
-	
-	private String uid;
-	private String upw;
+
+	private String id;
+	private String pw;
 	private boolean useCookie;
-	
-	public String getUid() {
-		return uid;
+/*	private int user_id;
+	private String nickname;*/
+
+	public String getId() {
+		return id;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getUpw() {
-		return upw;
+
+	public String getPw() {
+		return pw;
 	}
-	public void setUpw(String upw) {
-		this.upw = upw;
+
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
+
 	public boolean isUseCookie() {
 		return useCookie;
 	}
+
 	public void setUseCookie(boolean useCookie) {
 		this.useCookie = useCookie;
 	}
+
+/*	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}*/
+
 	@Override
 	public String toString() {
-		return "LoginDTO [uid=" + uid + ", upw=" + upw + ", useCookie=" + useCookie + "]";
+		return "LoginDTO [id=" + id + ", pw=" + pw + ", useCookie=" + useCookie + "]";
 	}
-	
-	
 
 }

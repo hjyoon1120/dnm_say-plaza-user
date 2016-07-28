@@ -11,15 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.WebUtils;
 
-import com.dongnemon.domain.AccountVO;
-import com.dongnemon.service.AccountService;
+import com.dongnemon.domain.UserVO;
+import com.dongnemon.service.UserService;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
 	@Autowired
-	private AccountService service;
+	private UserService service;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -36,17 +36,17 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 			if (loginCookie != null) {
 
-				AccountVO accountVO = service.checkLoginBefore(loginCookie.getValue());
+				UserVO userVO = service.checkLoginBefore(loginCookie.getValue());
 
-				logger.info("ACCOUNTVO: " + accountVO);
+				logger.info("USERVO: " + userVO);
 
-				if (accountVO != null) {
-					session.setAttribute("login", accountVO);
+				if (userVO != null) {
+					session.setAttribute("login", userVO);
 					return true;
 				}
 			}
 
-			response.sendRedirect("/account/login");
+			response.sendRedirect("/user/login");
 			return false;
 		}
 

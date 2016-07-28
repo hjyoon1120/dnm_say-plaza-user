@@ -37,14 +37,20 @@
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/account/loginPost"/>
+			<mapping path="/user/loginPost"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/board/register"/>
-			<mapping path="/board/modify"/>
-			<mapping path="/board/remove"/>
+			<mapping path="/say/register"/>
+			<mapping path="/say/modify"/>
+			<mapping path="/say/remove"/>
+			<mapping path="/user/modify"/>
+			<mapping path="/user/remove"/>
+			<mapping path="/plaza/register"/>
+			<mapping path="/plaza/modify"/>
+			<mapping path="/plaza/remove"/>
+		
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>

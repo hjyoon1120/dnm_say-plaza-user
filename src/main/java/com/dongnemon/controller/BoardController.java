@@ -101,7 +101,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@RequestMapping("/getAttach/{bno}")
+	@RequestMapping(value= "/getAttach/{bno}")
 	@ResponseBody
 	public List<String> getAttach(@PathVariable("bno") Integer bno) throws Exception {
 		

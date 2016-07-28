@@ -18,6 +18,8 @@ public class SayVO {
 	private Date updated_at;
 	private Date deleted_at;
 
+	private String nickname;
+
 	private String[] files;
 
 	public Integer getId() {
@@ -124,12 +126,22 @@ public class SayVO {
 		this.files = files;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	@Override
 	public String toString() {
 		return "SayVO [id=" + id + ", user_id=" + user_id + ", body=" + body + ", latitude=" + latitude + ", longitude="
 				+ longitude + ", img_src=" + img_src + ", cnt_like=" + cnt_like + ", cnt_comment=" + cnt_comment
 				+ ", item_id=" + item_id + ", created_at=" + created_at + ", updated_at=" + updated_at + ", deleted_at="
-				+ deleted_at + ", files=" + Arrays.toString(files) + "]";
+				+ deleted_at + ", nickname=" + nickname + ", files=" + Arrays.toString(files) + "]";
 	}
+
+	
 
 }

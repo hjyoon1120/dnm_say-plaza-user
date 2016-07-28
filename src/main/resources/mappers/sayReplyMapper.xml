@@ -22,13 +22,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<select id="list" resultType="SayReplyVO">
-		select * from tb_say_comment where say_id =
-		#{say_id} order by id desc
+		select tb_say_comment.*, tb_users.nickname 
+		from tb_say_comment, tb_users 
+		where tb_say_comment.say_id = #{say_id} 
+		and tb_say_comment.user_id = tb_users.id
+		order by tb_say_comment.id desc
 	</select>
 
 	<select id="listPage" resultType="SayReplyVO">
-		select * from tb_say_comment where say_id =
-		#{say_id} order by id desc
+		select tb_say_comment.*, tb_users.nickname 
+		from tb_say_comment, tb_users 
+		where tb_say_comment.say_id = #{say_id} 
+		and tb_say_comment.user_id = tb_users.id
+		order by tb_say_comment.id desc
 		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 
